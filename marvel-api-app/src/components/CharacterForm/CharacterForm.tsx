@@ -74,7 +74,7 @@ const CharacterForm = () => {
             <tr>
               <th>Title</th>
               <th>Issue Number</th>
-              <th>Variant Description</th>
+              
               <th>Image URL</th>
             </tr>
           </thead>
@@ -84,7 +84,7 @@ const CharacterForm = () => {
               <tr key={result.id}>
                 <td>{result.title}</td>
                 <td>{result.issueNumber}</td>
-                <td>{result.variantDescription}</td>
+                
                 <td>
                   {result.thumbnail && (
                     <img
