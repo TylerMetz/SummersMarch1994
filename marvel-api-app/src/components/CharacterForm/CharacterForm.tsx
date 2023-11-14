@@ -8,6 +8,8 @@ const CharacterForm = () => {
     // add more search parameters as needed
   });
 
+  const [responseData, setResponseData] = useState(null);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setSearchParams((prevSearchParams) => ({
@@ -30,7 +32,7 @@ const CharacterForm = () => {
     const hash = MD5(ts + privateKey + apiKey).toString();
 
     // Construct the URL with the required parameters
-    const url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}`;
+    const url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&title=${searchParams.comic}`;
 
     // Set headers
     const headers = {
@@ -45,31 +47,56 @@ const CharacterForm = () => {
 
     // Parse the response
     const data = await response.json();
-    console.log(data); // display the response data in the console for now
+    setResponseData(data);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Character Name:
-        <input
-          type="text"
-          name="name"
-          value={searchParams.name}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label>
-        Comic Title:
-        <input
-          type="text"
-          name="comic"
-          value={searchParams.comic}
-          onChange={handleInputChange}
-        />
-      </label>
-      <button type="submit">Search</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Comic Title:
+          <input
+            type="text"
+            name="comic"
+            value={searchParams.comic}
+            onChange={handleInputChange}
+          />
+        </label>
+        <button type="submit">Search</button>
+      </form>
+
+      {responseData && responseData.code === 200 && (
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Issue Number</th>
+              <th>Variant Description</th>
+              <th>Image URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {responseData.data.results.map((result) => (
+              <tr key={result.id}>
+                <td>{result.title}</td>
+                <td>{result.issueNumber}</td>
+                <td>{result.variantDescription}</td>
+                <td>
+                  {result.thumbnail && (
+                    <img
+                      src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
+                      alt={result.title}
+                      style={{ maxWidth: '100px' }} // Set max width for the image
+                    />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
 
