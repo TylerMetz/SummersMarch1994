@@ -51,6 +51,7 @@ const CharacterForm = () => {
     // Parse the response
     const data: ComicDataWrapper = await response.json();
     setResponseData(data);
+    console.log(data);
   };
 
   return (
@@ -74,27 +75,27 @@ const CharacterForm = () => {
             <tr>
               <th>Title</th>
               <th>Issue Number</th>
+              <th>Description</th>
               <th>Cover</th>
             </tr>
           </thead>
           <tbody>
-            {responseData?.data?.results?.map((result) => (
+            {responseData.data?.results?.map((result) => (
               <tr key={result.id}>
                 <td>
-                  {result.urls &&
-                    result.urls
-                      .filter((urlItem) => urlItem.type === 'detail')
-                      .map((detailLink) => (
-                        <a
-                          key={detailLink.type}
-                          href={detailLink.url}
-                          target="_blank"
-                          rel="noopener noreferrer">
-                          {result.title}
-                        </a>
-                      ))}
+                  {result.urls?.filter((urlItem) => urlItem.type === 'detail')?.map((detailLink) => (
+                    <a
+                      key={detailLink.type}
+                      href={detailLink.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {result.title}
+                    </a>
+                  ))}
                 </td>
                 <td>{result.issueNumber}</td>
+                <td>{result.description}</td>
                 <td>
                   {result.thumbnail && (
                     <img
