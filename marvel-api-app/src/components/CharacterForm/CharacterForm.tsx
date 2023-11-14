@@ -74,28 +74,36 @@ const CharacterForm = () => {
             <tr>
               <th>Title</th>
               <th>Issue Number</th>
-              
-              <th>Image URL</th>
+              <th>Cover</th>
             </tr>
           </thead>
           <tbody>
-            
-            {responseData?.data?.results?.map((result) => ( 
-              <tr key={result.id}>
-                <td>{result.title}</td>
-                <td>{result.issueNumber}</td>
-                
-                <td>
-                  {result.thumbnail && (
-                    <img
-                      src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
-                      alt={result.title}
-                      style={{ maxWidth: '100px' }} // Set max width for the image
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
+          {responseData?.data?.results?.map((result) => (
+  <tr key={result.id}>
+    <td>
+      {result.urls &&
+        result.urls
+          .filter((urlItem) => urlItem.type === "detail")
+          .map((detailLink) => (
+            <a key={detailLink.type} href={detailLink.url} target="_blank" rel="noopener noreferrer">
+              {result.title}
+            </a>
+          ))}
+    </td>
+    <td>{result.issueNumber}</td>
+    <td>
+      {result.thumbnail && (
+        <img
+          src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
+          alt={result.title}
+          style={{ maxWidth: '100px' }}
+        />
+      )}
+    </td>
+  </tr>
+))}
+
+
           </tbody>
         </table>
       )}
