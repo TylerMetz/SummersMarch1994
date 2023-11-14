@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { MD5 } from "crypto-js";
+import { ComicDataWrapper } from "../../marvel-api-types";
 
+ 
 const CharacterForm = () => {
   const [searchParams, setSearchParams] = useState({
     name: "",
@@ -8,7 +10,8 @@ const CharacterForm = () => {
     // add more search parameters as needed
   });
 
-  const [responseData, setResponseData] = useState(null);
+  const [responseData, setResponseData] = useState<ComicDataWrapper | null>(null);
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -46,7 +49,7 @@ const CharacterForm = () => {
     });
 
     // Parse the response
-    const data = await response.json();
+    const data: ComicDataWrapper = await response.json();
     setResponseData(data);
   };
 
@@ -77,7 +80,7 @@ const CharacterForm = () => {
           </thead>
           <tbody>
             
-            {responseData.data.results.map((result) => (
+            {responseData?.data?.results?.map((result) => ( 
               <tr key={result.id}>
                 <td>{result.title}</td>
                 <td>{result.issueNumber}</td>
