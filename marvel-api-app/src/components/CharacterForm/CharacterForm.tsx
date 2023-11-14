@@ -32,7 +32,7 @@ const CharacterForm = () => {
     const hash = MD5(ts + privateKey + apiKey).toString();
 
     // Construct the URL with the required parameters
-    const url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&title=${searchParams.comic}`;
+    const url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&title=${searchParams.comic}&orderBy=onsaleDate`;
 
     // Set headers
     const headers = {
