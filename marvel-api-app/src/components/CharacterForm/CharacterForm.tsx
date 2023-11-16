@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { MD5 } from 'crypto-js';
 import { ComicDataWrapper } from '../../marvel-api-types';
+import ComicSearchFilters from './ComicSearchFilters';
+import { FilterSettings } from './filter-types';
 
 const CharacterForm = () => {
   const [searchParams, setSearchParams] = useState({
     name: '',
     comic: '',
     // add more search parameters as needed
+  });
+
+  const [filterSettings, setFilterSettings] = useState({
+    orderBy: null as string | null,
   });
 
   const [responseData, setResponseData] = useState<ComicDataWrapper | null>(
@@ -35,7 +41,12 @@ const CharacterForm = () => {
     const hash = MD5(ts + privateKey + apiKey).toString();
 
     // Construct the URL with the required parameters
-    const url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&title=${searchParams.comic}&orderBy=onsaleDate`;
+    let url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&title=${searchParams.comic}`;
+
+    // Add filter settings to the URL
+    if (filterSettings.orderBy) {
+      url += `&orderBy=${filterSettings.orderBy}`;
+    }
 
     // Set headers
     const headers = {
@@ -54,8 +65,14 @@ const CharacterForm = () => {
     console.log(data);
   };
 
+  const saveFilterSettings = (newFilterSettings: FilterSettings) => {
+    setFilterSettings(newFilterSettings);
+  };
+
   return (
     <div>
+      <ComicSearchFilters
+        onFilterChange={saveFilterSettings}></ComicSearchFilters>
       <form onSubmit={handleSubmit}>
         <label>
           Comic Title:
@@ -83,16 +100,17 @@ const CharacterForm = () => {
             {responseData.data?.results?.map((result) => (
               <tr key={result.id}>
                 <td>
-                  {result.urls?.filter((urlItem) => urlItem.type === 'detail')?.map((detailLink) => (
-                    <a
-                      key={detailLink.type}
-                      href={detailLink.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {result.title}
-                    </a>
-                  ))}
+                  {result.urls
+                    ?.filter((urlItem) => urlItem.type === 'detail')
+                    ?.map((detailLink) => (
+                      <a
+                        key={detailLink.type}
+                        href={detailLink.url}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        {result.title}
+                      </a>
+                    ))}
                 </td>
                 <td>{result.issueNumber}</td>
                 <td>{result.description}</td>
