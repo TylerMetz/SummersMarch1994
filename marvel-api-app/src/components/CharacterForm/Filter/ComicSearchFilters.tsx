@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './ComicSearchFilters.scss'
 
 type ComicSearchFiltersProps = {
   onFilterChange: (filter: { orderBy: string }) => void;
@@ -24,7 +25,7 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
         />
         On Sale Date
       </label>
-      <label>
+      <label className="order-by-label">
         <input
           type="radio"
           name="orderBy"
@@ -32,7 +33,7 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
           checked={selectedOrderBy === 'focDate'}
           onChange={() => handleOrderByChange('focDate')}
         />
-        Foc Date
+        FOC<span className="hover-text">(Final Order Cutoff)</span> Date
       </label>
       <label>
         <input
