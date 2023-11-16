@@ -1,3 +1,3 @@
 export type FilterSettings = {
-    orderBy: string | null;
-  }
+  orderBy: string | null;
+};

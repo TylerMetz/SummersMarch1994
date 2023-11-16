@@ -71,7 +71,8 @@ const CharacterForm = () => {
 
   return (
     <div>
-      <ComicSearchFilters onFilterChange={saveFilterSettings}></ComicSearchFilters>
+      <ComicSearchFilters
+        onFilterChange={saveFilterSettings}></ComicSearchFilters>
       <form onSubmit={handleSubmit}>
         <label>
           Comic Title:
@@ -99,16 +100,17 @@ const CharacterForm = () => {
             {responseData.data?.results?.map((result) => (
               <tr key={result.id}>
                 <td>
-                  {result.urls?.filter((urlItem) => urlItem.type === 'detail')?.map((detailLink) => (
-                    <a
-                      key={detailLink.type}
-                      href={detailLink.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {result.title}
-                    </a>
-                  ))}
+                  {result.urls
+                    ?.filter((urlItem) => urlItem.type === 'detail')
+                    ?.map((detailLink) => (
+                      <a
+                        key={detailLink.type}
+                        href={detailLink.url}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        {result.title}
+                      </a>
+                    ))}
                 </td>
                 <td>{result.issueNumber}</td>
                 <td>{result.description}</td>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type ComicSearchFiltersProps = {
   onFilterChange: (filter: { orderBy: string }) => void;
