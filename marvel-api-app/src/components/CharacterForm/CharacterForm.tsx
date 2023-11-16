@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { MD5 } from 'crypto-js';
 import { ComicDataWrapper } from '../../marvel-api-types';
-import ComicSearchFilters from './ComicSearchFilters';
-import { FilterSettings } from './filter-types';
+import ComicSearchFilters from './Filter/ComicSearchFilters';
+import { FilterSettings } from './Filter/filter-types';
 
 const CharacterForm = () => {
   const [searchParams, setSearchParams] = useState({

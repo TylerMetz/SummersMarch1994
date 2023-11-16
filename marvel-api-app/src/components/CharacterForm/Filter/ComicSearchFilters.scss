@@ -1,0 +1,19 @@
+.order-by-label {
+  position: relative;
+  cursor: pointer;
+  color: blue;
+}
+
+.order-by-label .hover-text {
+  display: none;
+  position: absolute;
+  color: red;
+}
+
+.order-by-label:hover .hover-text {
+  display: inline;
+  size: 10px;
+  white-space: nowrap;
+  margin-top: -20px;
+  left: 5px;
+}
