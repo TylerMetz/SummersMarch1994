@@ -66,6 +66,10 @@ const CharacterForm = () => {
       console.log('response was attempting, using starts with')
       url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&titleStartsWith=${searchParams.comic}`;
   
+      if (filterSettings.orderBy) {
+        url += `&orderBy=${filterSettings.orderBy}`;
+      }
+      
       const newResponse = await fetch(url, {
         method: 'GET',
         headers: headers,
