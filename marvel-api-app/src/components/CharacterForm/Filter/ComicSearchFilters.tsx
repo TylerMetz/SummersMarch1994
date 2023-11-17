@@ -17,7 +17,8 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
     });
   };
 
-  const handleIncludeVariantsChange = (includeVariants: boolean) => {
+  const handleIncludeVariantsChange = () => {
+    const includeVariants = !selectedIncludeVariants;
     setSelectedIncludeVariants(includeVariants);
     onFilterChange({
       orderBy: selectedOrderBy,
@@ -46,13 +47,11 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
       </label>
       <label>
         Include Variants:
-        <select
-          value={selectedIncludeVariants.toString()}
-          onChange={(e) => handleIncludeVariantsChange(e.target.value === 'true')}
-        >
-          <option value={'true'}>True</option>
-          <option value={'false'}>False</option>
-        </select>
+        <input
+          type="checkbox"
+          checked={selectedIncludeVariants}
+          onChange={handleIncludeVariantsChange}
+        />
       </label>
     </div>
   );
