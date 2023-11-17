@@ -13,6 +13,7 @@ const CharacterForm = () => {
 
   const [filterSettings, setFilterSettings] = useState({
     orderBy: null as string | null,
+    includeVariants: false,
   });
 
   const [responseData, setResponseData] = useState<ComicDataWrapper | null>(

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './ComicSearchFilters.scss'
 
 type ComicSearchFiltersProps = {
-  onFilterChange: (filter: { orderBy: string }) => void;
+  onFilterChange: (filter: { orderBy: string, includeVariants: boolean }) => void;
 };
 
 const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
@@ -10,13 +10,16 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
 
   const handleOrderByChange = (orderBy: string) => {
     setSelectedOrderBy(orderBy);
-    onFilterChange({ orderBy });
+    onFilterChange({
+      orderBy,
+      includeVariants: false
+    });
   };
 
   return (
     <div>
       <label>
-        Filter:
+        Order By Filter:
         <select
           value={selectedOrderBy}
           onChange={(e) => handleOrderByChange(e.target.value)}
@@ -30,6 +33,16 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
             <option value={'-focDate'}>- FOC(Final Order Cutoff) Date</option>
             <option value={'-title'}>- Title</option>
             <option value={'-issueNumber'}>- Issue Number</option>
+          </select>
+      </label>
+      <label>
+       Include Variants:
+        <select
+          value={selectedOrderBy}
+          onChange={(e) => handleOrderByChange(e.target.value)}
+          >
+            <option value={'true'}>True</option>
+            <option value={'false'}>False</option>
           </select>
       </label>
     </div>
