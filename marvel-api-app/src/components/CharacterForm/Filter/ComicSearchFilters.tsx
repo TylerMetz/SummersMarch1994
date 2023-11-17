@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import './ComicSearchFilters.scss'
+import './ComicSearchFilters.scss';
 
 type ComicSearchFiltersProps = {
-  onFilterChange: (filter: { orderBy: string, includeVariants: boolean }) => void;
+  onFilterChange: (filter: {
+    orderBy: string;
+    includeVariants: boolean;
+  }) => void;
 };
 
 const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
   const [selectedOrderBy, setSelectedOrderBy] = useState<string>('');
-  const [selectedIncludeVariants, setSelectedIncludeVariants] = useState<boolean>(false);
+  const [selectedIncludeVariants, setSelectedIncludeVariants] =
+    useState<boolean>(false);
 
   const handleOrderByChange = (orderBy: string) => {
     setSelectedOrderBy(orderBy);
@@ -32,8 +36,7 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
         Order By Filter:
         <select
           value={selectedOrderBy}
-          onChange={(e) => handleOrderByChange(e.target.value)}
-        >
+          onChange={(e) => handleOrderByChange(e.target.value)}>
           <option value={''}>None</option>
           <option value={'onsaleDate'}>On Sale Date</option>
           <option value={'focDate'}>FOC(Final Order Cutoff) Date</option>

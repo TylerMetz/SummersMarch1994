@@ -59,7 +59,7 @@ const CharacterForm = () => {
     };
 
     // Make the API call
-    console.log('fetching: ', url)
+    console.log('fetching: ', url);
     const response = await fetch(url, {
       method: 'GET',
       headers: headers,
@@ -68,18 +68,18 @@ const CharacterForm = () => {
     // Parse the response
     const data: ComicDataWrapper = await response.json();
     if (data.code === 200 && data.data?.results?.length === 0) {
-      console.log('response was attempting, using starts with')
+      console.log('response was attempting, using starts with');
       url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&titleStartsWith=${searchParams.comic}`;
-  
+
       if (filterSettings.orderBy) {
         url += `&orderBy=${filterSettings.orderBy}`;
       }
-      
+
       const newResponse = await fetch(url, {
         method: 'GET',
         headers: headers,
       });
-  
+
       const newData: ComicDataWrapper = await newResponse.json();
       setResponseData(newData);
       console.log(newData);
