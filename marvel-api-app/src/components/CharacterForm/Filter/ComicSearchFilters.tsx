@@ -35,11 +35,11 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
           onChange={(e) => handleOrderByChange(e.target.value)}
         >
           <option value={''}>None</option>
-          <option value={'onSaleDate'}>On Sale Date</option>
+          <option value={'onsaleDate'}>On Sale Date</option>
           <option value={'focDate'}>FOC(Final Order Cutoff) Date</option>
           <option value={'title'}>Title</option>
           <option value={'issueNumber'}>Issue Number</option>
-          <option value={'-onSaleDate'}>- On Sale Date</option>
+          <option value={'-onsaleDate'}>- On Sale Date</option>
           <option value={'-focDate'}>- FOC(Final Order Cutoff) Date</option>
           <option value={'-title'}>- Title</option>
           <option value={'-issueNumber'}>- Issue Number</option>
