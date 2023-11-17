@@ -49,6 +49,10 @@ const CharacterForm = () => {
       url += `&orderBy=${filterSettings.orderBy}`;
     }
 
+    if (!filterSettings.includeVariants) {
+      url += `&noVariants=${filterSettings.includeVariants}`;
+    }
+
     // Set headers
     const headers = {
       Accept: 'application/json',
