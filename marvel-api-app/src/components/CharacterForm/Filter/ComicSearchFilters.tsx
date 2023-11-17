@@ -16,44 +16,21 @@ const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
   return (
     <div>
       <label>
-        <input
-          type="radio"
-          name="orderBy"
-          value="onsaleDate"
-          checked={selectedOrderBy === 'onsaleDate'}
-          onChange={() => handleOrderByChange('onsaleDate')}
-        />
-        On Sale Date
-      </label>
-      <label className="order-by-label">
-        <input
-          type="radio"
-          name="orderBy"
-          value="focDate"
-          checked={selectedOrderBy === 'focDate'}
-          onChange={() => handleOrderByChange('focDate')}
-        />
-        FOC<span className="hover-text">(Final Order Cutoff)</span> Date
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="orderBy"
-          value="title"
-          checked={selectedOrderBy === 'title'}
-          onChange={() => handleOrderByChange('title')}
-        />
-        Title
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="orderBy"
-          value="issueNumber"
-          checked={selectedOrderBy === 'issueNumber'}
-          onChange={() => handleOrderByChange('issueNumber')}
-        />
-        Issue Number
+        Filter:
+        <select
+          value={selectedOrderBy}
+          onChange={(e) => handleOrderByChange(e.target.value)}
+          >
+            <option value={''}>None</option>
+            <option value={'onSaleDate'}>On Sale Date</option>
+            <option value={'focDate'}>FOC(Final Order Cutoff) Date</option>
+            <option value={'title'}>Title</option>
+            <option value={'issueNumber'}>Issue Number</option>
+            <option value={'-onSaleDate'}>- On Sale Date</option>
+            <option value={'-focDate'}>- FOC(Final Order Cutoff) Date</option>
+            <option value={'-title'}>- Title</option>
+            <option value={'-issueNumber'}>- Issue Number</option>
+          </select>
       </label>
     </div>
   );
