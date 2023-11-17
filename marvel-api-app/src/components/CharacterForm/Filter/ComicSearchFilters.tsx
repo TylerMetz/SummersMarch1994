@@ -1,59 +1,60 @@
 import { useState } from 'react';
-import './ComicSearchFilters.scss'
+import './ComicSearchFilters.scss';
 
 type ComicSearchFiltersProps = {
-  onFilterChange: (filter: { orderBy: string }) => void;
+  onFilterChange: (filter: {
+    orderBy: string;
+    includeVariants: boolean;
+  }) => void;
 };
 
 const ComicSearchFilters = ({ onFilterChange }: ComicSearchFiltersProps) => {
-  const [selectedOrderBy, setSelectedOrderBy] = useState('');
+  const [selectedOrderBy, setSelectedOrderBy] = useState<string>('');
+  const [selectedIncludeVariants, setSelectedIncludeVariants] =
+    useState<boolean>(false);
 
   const handleOrderByChange = (orderBy: string) => {
     setSelectedOrderBy(orderBy);
-    onFilterChange({ orderBy });
+    onFilterChange({
+      orderBy,
+      includeVariants: selectedIncludeVariants,
+    });
+  };
+
+  const handleIncludeVariantsChange = () => {
+    const includeVariants = !selectedIncludeVariants;
+    setSelectedIncludeVariants(includeVariants);
+    onFilterChange({
+      orderBy: selectedOrderBy,
+      includeVariants,
+    });
   };
 
   return (
     <div>
       <label>
-        <input
-          type="radio"
-          name="orderBy"
-          value="onsaleDate"
-          checked={selectedOrderBy === 'onsaleDate'}
-          onChange={() => handleOrderByChange('onsaleDate')}
-        />
-        On Sale Date
-      </label>
-      <label className="order-by-label">
-        <input
-          type="radio"
-          name="orderBy"
-          value="focDate"
-          checked={selectedOrderBy === 'focDate'}
-          onChange={() => handleOrderByChange('focDate')}
-        />
-        FOC<span className="hover-text">(Final Order Cutoff)</span> Date
+        Order By Filter:
+        <select
+          value={selectedOrderBy}
+          onChange={(e) => handleOrderByChange(e.target.value)}>
+          <option value={''}>None</option>
+          <option value={'onsaleDate'}>On Sale Date</option>
+          <option value={'focDate'}>FOC(Final Order Cutoff) Date</option>
+          <option value={'title'}>Title</option>
+          <option value={'issueNumber'}>Issue Number</option>
+          <option value={'-onsaleDate'}>- On Sale Date</option>
+          <option value={'-focDate'}>- FOC(Final Order Cutoff) Date</option>
+          <option value={'-title'}>- Title</option>
+          <option value={'-issueNumber'}>- Issue Number</option>
+        </select>
       </label>
       <label>
+        Include Variants:
         <input
-          type="radio"
-          name="orderBy"
-          value="title"
-          checked={selectedOrderBy === 'title'}
-          onChange={() => handleOrderByChange('title')}
+          type="checkbox"
+          checked={selectedIncludeVariants}
+          onChange={handleIncludeVariantsChange}
         />
-        Title
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="orderBy"
-          value="issueNumber"
-          checked={selectedOrderBy === 'issueNumber'}
-          onChange={() => handleOrderByChange('issueNumber')}
-        />
-        Issue Number
       </label>
     </div>
   );
