@@ -14,6 +14,7 @@ const CharacterForm = () => {
   const [filterSettings, setFilterSettings] = useState({
     orderBy: null as string | null,
     includeVariants: false,
+    dateDescriptor: null as string | null,
   });
 
   const [responseData, setResponseData] = useState<ComicDataWrapper | null>(
@@ -42,8 +43,11 @@ const CharacterForm = () => {
     const hash = MD5(ts + privateKey + apiKey).toString();
 
     // Construct the URL with the required parameters
-    let url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&title=${searchParams.comic}`;
+    let url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}`;
 
+    if(searchParams.comic) {
+    url += `&title=${searchParams.comic}`;
+    }
     // Add filter settings to the URL
     if (filterSettings.orderBy) {
       url += `&orderBy=${filterSettings.orderBy}`;
@@ -51,6 +55,10 @@ const CharacterForm = () => {
 
     if (!filterSettings.includeVariants) {
       url += `&noVariants=${filterSettings.includeVariants}`;
+    }
+
+    if(filterSettings.dateDescriptor) { 
+      url += `&dateDescriptor=${filterSettings.dateDescriptor}`;
     }
 
     // Set headers
