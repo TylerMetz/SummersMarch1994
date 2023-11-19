@@ -75,12 +75,24 @@ const CharacterForm = () => {
 
     // Parse the response
     const data: ComicDataWrapper = await response.json();
-    if (data.code === 200 && data.data?.results?.length === 0) {
+    if (data.code === 200 && (data.data?.results?.length ?? 0) > 0) {
       console.log('response was attempting, using starts with');
-      url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}&titleStartsWith=${searchParams.comic}`;
+      url = `${baseUrl}?ts=${ts}&apikey=${apiKey}&hash=${hash}`;
+
+      if(searchParams.comic) {
+        url += `&titleStartsWith=${searchParams.comic}`;
+      }
 
       if (filterSettings.orderBy) {
         url += `&orderBy=${filterSettings.orderBy}`;
+      }
+
+      if (!filterSettings.includeVariants) {
+        url += `&noVariants=${filterSettings.includeVariants}`;
+      }
+  
+      if(filterSettings.dateDescriptor) { 
+        url += `&dateDescriptor=${filterSettings.dateDescriptor}`;
       }
 
       const newResponse = await fetch(url, {
